@@ -8,6 +8,12 @@ from flask import render_template, session, redirect, url_for
 from . import main
 from ..models import User
 
-@main.route('/',methods = ['POST','GET'])
+@main.route('/', methods = ['POST', 'GET'])
+@main.route('/index', methods = ['POST', 'GET'])
 def index():
     return render_template('index.html')
+
+
+@main.route('/upload', methods = ['POST', 'GET'])
+def upload():
+    return render_template('upload.html')
