@@ -10,8 +10,6 @@ class Config:
         pass
 
 class DevelopmentConfig(Config):
-#    dbuser = 'tfs'
-#    dbpass = 'fb3acfb1128f50d7a53015b0953ac8b6'
     dbuser = 'root'
     dbpass = ''
     dbhost = '192.168.159.129:3306'
@@ -19,8 +17,7 @@ class DevelopmentConfig(Config):
     DEBUG = True
 
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
-        'mysql://root:@192.168.159.129:3306/tfsweb'
-#        'mysql:///' + dbuser + ':' + dbpass + '@' + dbhost + '/' + dbname
+        'mysql://' + dbuser + ':' + dbpass + '@' + dbhost + '/' + dbname
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 class TestingConfig(Config):
