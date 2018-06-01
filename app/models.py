@@ -1,6 +1,3 @@
-import os
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from . import db
 
 class Role(db.Model):
@@ -18,3 +15,13 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.username
+
+class UploadFile(db.Model):
+    __tablename__ = 'uploadfile'
+    tfsname = db.Column(db.String(64), unique=True, index=True, primary_key=True)
+    md5 = db.Column(db.String(64), unique=True, index=True)
+    filename = db.Column(db.String(64), index=True)
+    mtime = db.Column(db.DateTime, nullable=False)
+
+    def __repr__(self):
+        return '<UploadFile %r>' % self.tfsname
