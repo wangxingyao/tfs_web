@@ -237,7 +237,7 @@ https://github.com/funnyque
           for (var i = 0; i < fileArr.length; i++) {
             if (option.multi) {
               var qItemNum = $(queueUl).find('.easy_upload_queue_item:visible').length;
-              if (qItemNum<option.multiNum) render(fileArr[i]);          
+              if (qItemNum<option.multiNum) render(fileArr[i]);
             } else {
               render(fileArr[i]);
             }
@@ -431,7 +431,7 @@ https://github.com/funnyque
           function deleAllowFiles(itm) {
             allowFiles.forEach(function(item,index){
               if (itm == item) allowFiles.splice(index,1);
-            }); 
+            });
           }
           arr.forEach(function(item){
             $(target).find(`.easy_upload_queue_item[data-index=${item}]`).hide().find('.queue_check').hide();
