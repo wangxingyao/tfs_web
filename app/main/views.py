@@ -1,12 +1,9 @@
 #coding: utf-8
 
 # app/main/views.py：带有蓝图的应用程序路由
-from datetime import datetime
-
-from flask import render_template, session, redirect, url_for
+from flask import render_template
 
 from . import main
-from ..models import User
 
 @main.route('/', methods = ['POST', 'GET'])
 @main.route('/index', methods = ['POST', 'GET'])
@@ -17,3 +14,7 @@ def index():
 @main.route('/upload', methods = ['POST', 'GET'])
 def upload():
     return render_template('upload.html')
+
+@main.route('/download', methods = ['POST', 'GET'])
+def download():
+    return render_template('download.html')
