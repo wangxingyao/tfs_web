@@ -28,12 +28,13 @@ def save_tfs(file, filename):
     return tfsname
 
 def update_name_map(filename, md5):
-    uf = UploadFile.query.filter_by(md5=md5).all()
+    uf = UploadFile.query.filter_by(md5=md5).first()
     if uf:
-        uf = uf[0]
+        print 'have'
         uf.filename = filename
         uf.mtime = datetime.now()
         return True
+    print "not"
     return False
 
 def save_name_map(filename, tfsname, md5):
@@ -56,10 +57,10 @@ def upload_file():
 
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            md5 = commands.getoutput("md5sum " + filepath).split()[0]
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], "temp.file")
             file.save(filepath)
             file.close()
+            md5 = commands.getoutput("md5sum " + filepath).split()[0]
 
             if not update_name_map(filename, md5):
                 tfsname = save_tfs(file, filename)
