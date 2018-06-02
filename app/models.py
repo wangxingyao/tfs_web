@@ -21,7 +21,7 @@ class UploadFile(db.Model):
     tfsname = db.Column(db.String(64), unique=True, index=True, primary_key=True)
     md5 = db.Column(db.String(64), unique=True, index=True)
     filename = db.Column(db.String(64), index=True)
-    mtime = db.Column(db.DateTime, nullable=False)
+    mtime = db.Column(db.DateTime, nullable=False, index=True)
 
     def __repr__(self):
         return '<UploadFile %r>' % self.tfsname
