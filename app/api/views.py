@@ -19,12 +19,11 @@ def allowed_file(filename):
 def query_md5(md5):
     pass
 
-def save_tfs(file, filename):
+def save_tfs(file, filename, filepath):
     app = current_app._get_current_object()
-    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     tfs = pytfs.TfsClient()
     tfs.init(app.config['TFS_SERVER'])
-    tfsname = tfs.put(filepath)
+    tfsname = tfs.put(open(filepath).read())
     return tfsname
 
 def update_name_map(filename, md5):
@@ -60,10 +59,11 @@ def upload_file():
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], "temp.file")
             file.save(filepath)
             file.close()
-            md5 = commands.getoutput("md5sum " + filepath).split()[0]
+            cmd = "md5sum " + filepath
+            md5 = commands.getoutput(cmd).split()[0]
 
             if not update_name_map(filename, md5):
-                tfsname = save_tfs(file, filename)
+                tfsname = save_tfs(file, filename, filepath)
                 save_name_map(filename, tfsname, md5)
 
         return jsonify({'code': '200'})
