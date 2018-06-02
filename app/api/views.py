@@ -29,11 +29,9 @@ def save_tfs(file, filename, filepath):
 def update_name_map(filename, md5):
     uf = UploadFile.query.filter_by(md5=md5).first()
     if uf:
-        print 'have'
         uf.filename = filename
         uf.mtime = datetime.now()
         return True
-    print "not"
     return False
 
 def save_name_map(filename, tfsname, md5):
