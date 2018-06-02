@@ -4,6 +4,7 @@
 from flask import render_template
 
 from . import main
+from ..models import UploadFile
 
 @main.route('/', methods = ['POST', 'GET'])
 @main.route('/index', methods = ['POST', 'GET'])
@@ -17,4 +18,11 @@ def upload():
 
 @main.route('/download', methods = ['POST', 'GET'])
 def download():
-    return render_template('download.html')
+    uf = UploadFile.query.all()
+    urls = []
+    for e in uf:
+        url = "http://192.168.159.133/v1/tfs/{}".format(e.tfsname)
+        urls.append(url)
+        print url
+
+    return render_template('download.html', urls=urls)
