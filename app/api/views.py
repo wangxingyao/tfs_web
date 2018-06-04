@@ -3,27 +3,30 @@
 # app/api/views.py：带有蓝图的应用程序路由
 
 from flask import redirect, request, jsonify
-from flask import current_app
 from werkzeug.utils import secure_filename
-import os, pytfs, commands
+import pytfs, commands
 from datetime import datetime
 
 from . import api
 from ..models import UploadFile
 from .. import db
 
+TEMP_FILE = '/root/uploads/temp.file'
+TFS_SERVER = 'NS:8100'
+
 def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1].lower() in set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
-def query_md5(md5):
-    pass
+def query_md5():
+    cmd = "md5sum " + TEMP_FILE
+    md5 = commands.getoutput(cmd).split()[0]
+    return md5
 
-def save_tfs(file, filename, filepath):
-    app = current_app._get_current_object()
+def save_tfs(file, filename):
     tfs = pytfs.TfsClient()
-    tfs.init(app.config['TFS_SERVER'])
-    tfsname = tfs.put(open(filepath).read())
+    tfs.init(TFS_SERVER)
+    tfsname = tfs.put(open(TEMP_FILE).read())
     return tfsname
 
 def update_name_map(filename, md5):
@@ -41,7 +44,6 @@ def save_name_map(filename, tfsname, md5):
 
 @api.route('/file/upload', methods = ['POST', 'GET'])
 def upload_file():
-    app = current_app._get_current_object()
     if request.method == 'POST':
         if 'file' not in request.files:
             print('No file part')
@@ -54,14 +56,12 @@ def upload_file():
 
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], "temp.file")
-            file.save(filepath)
+            file.save(TEMP_FILE)
             file.close()
-            cmd = "md5sum " + filepath
-            md5 = commands.getoutput(cmd).split()[0]
+            md5 = query_md5()
 
             if not update_name_map(filename, md5):
-                tfsname = save_tfs(file, filename, filepath)
+                tfsname = save_tfs(file, filename)
                 save_name_map(filename, tfsname, md5)
 
         return jsonify({'code': '200'})
