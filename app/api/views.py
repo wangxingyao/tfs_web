@@ -12,7 +12,7 @@ from ..models import UploadFile
 from .. import db
 
 TEMP_FILE = '/root/uploads/temp.file'
-TFS_SERVER = 'NS:8100'
+TFS_SERVER = 'ns:8100'
 
 def allowed_file(filename):
     return '.' in filename and \

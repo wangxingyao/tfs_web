@@ -14,9 +14,9 @@ def execute(newcmds):
 def status():
     newcmds = [
         # ["host", "cmd"],
-        ["NS", "ps aux | grep -v grep | grep /app/tfs/bin/nameserver"],
-        ["DS1", "ps aux | grep -v grep | grep /app/tfs/bin/dataserver"],
-        ["DS2", "ps aux | grep -v grep | grep /app/tfs/bin/dataserver"],
+        ["ns-master", "ps aux | grep -v grep | grep /app/tfs/bin/nameserver"],
+        ["ds1", "ps aux | grep -v grep | grep /app/tfs/bin/dataserver"],
+        ["ds2", "ps aux | grep -v grep | grep /app/tfs/bin/dataserver"],
         ["nginx", "ps aux | grep -v grep | grep /usr/local/nginx/sbin/nginx"],
     ]
     execute(newcmds)
@@ -24,9 +24,9 @@ def status():
 def start():
     newcmds = [
         # ["host", "cmd"],
-        ["DS1", "/app/tfs/scripts/tfs start_ds 1-2"],
-        ["DS2", "/app/tfs/scripts/tfs start_ds 1-2"],
-        ["NS", "/app/tfs/scripts/tfs start_ns"],
+        ["ds1", "/app/tfs/scripts/tfs start_ds 1-2"],
+        ["ds2", "/app/tfs/scripts/tfs start_ds 1-2"],
+        ["ns-master", "/app/tfs/scripts/tfs start_ns"],
         ["nginx", "/usr/local/nginx/sbin/nginx"],
     ]
     execute(newcmds)
@@ -35,9 +35,9 @@ def stop():
     newcmds = [
         # ["host", "cmd"],
         ["nginx", "/usr/local/nginx/sbin/nginx -s stop"],
-        ["NS", "/app/tfs/scripts/tfs stop_ns"],
-        ["DS1", "/app/tfs/scripts/tfs stop_ds_all"],
-        ["DS2", "/app/tfs/scripts/tfs stop_ds_all"],
+        ["ns-master", "/app/tfs/scripts/tfs stop_ns"],
+        ["ds1", "/app/tfs/scripts/tfs stop_ds_all"],
+        ["ds2", "/app/tfs/scripts/tfs stop_ds_all"],
     ]
     execute(newcmds)
 
