@@ -14,7 +14,7 @@ def execute(newcmds):
 def status():
     newcmds = [
         # ["host", "cmd"],
-        ["ns-master", "ps aux | grep -v grep | grep /app/tfs/bin/nameserver"],
+        ["ns-master-el6", "ps aux | grep -v grep | grep /app/tfs/bin/nameserver"],
         ["ds1", "ps aux | grep -v grep | grep /app/tfs/bin/dataserver"],
         ["ds2", "ps aux | grep -v grep | grep /app/tfs/bin/dataserver"],
         ["nginx", "ps aux | grep -v grep | grep /usr/local/nginx/sbin/nginx"],
@@ -26,7 +26,7 @@ def start():
         # ["host", "cmd"],
         ["ds1", "/app/tfs/scripts/tfs start_ds 1-2"],
         ["ds2", "/app/tfs/scripts/tfs start_ds 1-2"],
-        ["ns-master", "/app/tfs/scripts/tfs start_ns"],
+        ["ns-master-el6", "/app/tfs/scripts/tfs start_ns"],
         ["nginx", "/usr/local/nginx/sbin/nginx"],
     ]
     execute(newcmds)
@@ -35,7 +35,7 @@ def stop():
     newcmds = [
         # ["host", "cmd"],
         ["nginx", "/usr/local/nginx/sbin/nginx -s stop"],
-        ["ns-master", "/app/tfs/scripts/tfs stop_ns"],
+        ["ns-master-el6", "/app/tfs/scripts/tfs stop_ns"],
         ["ds1", "/app/tfs/scripts/tfs stop_ds_all"],
         ["ds2", "/app/tfs/scripts/tfs stop_ds_all"],
     ]
